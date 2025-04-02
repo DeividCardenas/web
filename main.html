@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de DOM</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .gallery img { width: 50px; cursor: pointer; margin: 5px; }
+        .preview { display: block; width: 200px; margin-top: 10px; }
+        .task { cursor: pointer; }
+        .completed { text-decoration: line-through; color: gray; }
+    </style>
+</head>
+<body>
+    
+    <h2>Ejercicio 1: Contador de Caracteres</h2>
+    <textarea id="comment" maxlength="200"></textarea>
+    <p>Caracteres restantes: <span id="charCount">200</span></p>
+    
+    <h2>Ejercicio 2: Galería Interactiva</h2>
+    <div class="gallery">
+        <img src="./banano.webp" alt="Banano" >
+        <img src="./manzana.webp" alt="Manzana" >
+        <img src="./pera.webp" alt="Pera" >
+    </div>
+    <img id="preview" class="preview" src="" alt="Vista previa">
+    <p id="description"></p>
+    
+    <h2>Ejercicio 3: Lista de Tareas</h2>
+    <input type="text" id="taskInput" placeholder="Nueva tarea">
+    <button id="addTask">Añadir</button>
+    <ul id="taskList"></ul>
+    
+    <script>
+        // Ejercicio 1: Contador de Caracteres
+        document.getElementById('comment').addEventListener('input', function() {
+            document.getElementById('charCount').textContent = 200 - this.value.length;
+        });
+
+        // Ejercicio 2: Galería Interactiva
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('mouseover', function() {
+                document.getElementById('preview').src = this.src;
+                document.getElementById('description').textContent = this.dataset.description;
+            });
+        });
+
+        // Ejercicio 3: Lista de Tareas
+        function addTask() {
+            let input = document.getElementById('taskInput');
+            if (input.value.trim() === '') return;
+            let li = document.createElement('li');
+            li.textContent = input.value;
+            li.classList.add('task');
+            li.addEventListener('click', function() {
+                this.classList.toggle('completed');
+            });
+            li.addEventListener('dblclick', function() {
+                this.remove();
+            });
+            document.getElementById('taskList').appendChild(li);
+            input.value = '';
+        }
+        document.getElementById('addTask').addEventListener('click', addTask);
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTask();
+        });
+    </script>
+</body>
+</html>
